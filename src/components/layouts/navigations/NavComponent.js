@@ -1,4 +1,5 @@
 import React from 'react'
+import {NavLink} from 'react-router-dom'
 import './NavComponent.css'
 
 const NavComponent = props => {
@@ -12,16 +13,16 @@ const NavComponent = props => {
                     </div>
                     <ul className='navigation-list'>
                         <li className='navigation-item'>
-                            <a href='#' className='navigation-link'> Project List </a>
+                            <NavLink className='navigation-link' to='/projects/all'> Project List </NavLink>
                         </li>
                         <li className='navigation-item'>
-                            <a href='#' className='navigation-link'> New Project </a>
+                            <NavLink className='navigation-link' to='/projects/new'> New Project </NavLink>
                         </li>
                         <li className='navigation-item'>
-                            <a href='#' className='navigation-link active'> User List </a>
+                            <NavLink className='navigation-link' to='/users/all'> User List </NavLink>
                         </li>
                         <li className='navigation-item'>
-                            <a href='#' className='navigation-link'> New User </a>
+                            <NavLink className='navigation-link' to='/users/new'> New User </NavLink>
                         </li>
                     </ul>
                 </div>
