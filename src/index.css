@@ -11,3 +11,18 @@ body {
   height: 100%;
 }
 
+
+.App {
+  display: flex;
+
+}
+
+.content {
+  flex-grow: 1;
+}
+
+
+.container {
+  width: 80%;
+  margin: auto;
+}

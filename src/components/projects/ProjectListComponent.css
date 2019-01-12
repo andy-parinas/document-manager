@@ -1,0 +1,15 @@
+.project-list-content {
+
+    height: 50rem;
+
+    margin-top: 3rem;
+    padding: 1rem;
+
+    border: 1px solid green;
+}
+
+.project-list-table {
+    width: 70%;
+    margin-top: 3rem;
+    background-color: orangered;
+}
