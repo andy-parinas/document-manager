@@ -1,5 +1,5 @@
 .navbar {
-    width: 20rem;
+    width: 250px;
     height:100vh;
     background-color: red;
     
@@ -16,7 +16,7 @@
 }
 
 .navigation__group {
-    height: 35rem;
+    height: 350px;
 
     display: flex;
     flex-direction: column;
@@ -26,7 +26,7 @@
 
 .navigation__heading{
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.5rem;
+    font-size: 25px;
     font-weight: 300;
     letter-spacing: 0.2rem;
     color: #ffffff;
@@ -36,7 +36,7 @@
 .navigation-list {
     list-style: none;
     padding: 0;
-    height: 18rem;
+    height: 180px;
 
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@
 
 .navigation-link {
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 15px;
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
@@ -60,22 +60,22 @@
 .navigation-link::before{
     content: "";
     width: 0rem;
-    height: 0.1rem;
+    height: 1px;
     background-color: #deaa86;
     position: absolute;
-    top: 1rem;
-    left: -2.5rem;
+    top: 10px;
+    left: -35px;
     transition: width 0.5s cubic-bezier(1,0,0,1);
 }
 
 .navigation-link::after{
     content: "";
     width: 0rem;
-    height: 0.1rem;
+    height: 1px;
     background-color: #deaa86;
     position: absolute;
-    top: 1rem;
-    right: -2.5rem;
+    top: 10px;
+    right: -35px;
     transition: width 0.5s cubic-bezier(1,0,0,1);
 }
 
@@ -95,6 +95,6 @@
 
 
 .navigation__footer {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
+    font-size: 12px;
+    margin-bottom: 25px;
 }
