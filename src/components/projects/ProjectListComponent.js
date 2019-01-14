@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {withStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
+
+import {loadProjects} from '../../store/actions/projectActions';
+
 import EnhancedTable from '../../lib/tables/enhanced-table/EnhancedTable';
 
 
@@ -44,10 +48,13 @@ const styles = theme => ({
 class ProjectListComponent extends Component {
 
 
+    componentDidMount(){
+        this.props.loadProjects()
+    }
 
     render(){
         const {classes} = this.props;
-
+        console.log(this.props.projects)
         return(
             <div className='container'>
                 <div className='project-list-content'>
@@ -59,7 +66,7 @@ class ProjectListComponent extends Component {
                         </Button>
                     </div>               
                     <div className='project-list-table'>
-                        <EnhancedTable columns={columns} data={data} />
+                        <EnhancedTable columns={columns} data={this.props.projects} />
                     </div>
                 </div>
             </div>
@@ -68,4 +75,16 @@ class ProjectListComponent extends Component {
 
 }
 
-export default withStyles(styles)(ProjectListComponent);
+const mapStateToProps = state => {
+    return {
+        projects: state.projects.projects
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loadProjects: ()=>dispatch(loadProjects())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProjectListComponent));
