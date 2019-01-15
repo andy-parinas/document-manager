@@ -5,14 +5,14 @@ import {Switch, Route} from 'react-router-dom';
 import SignInComponent from './components/auth/SignInComponent';
 import Dashboard from './components/Dashboard';
 
+import withAuthentication from './hoc/withAuthentication';
+
 
 class App extends Component {
 
     state = {
       auth: false
     }
-
-
 
     render() {
       
@@ -30,4 +30,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withAuthentication(App);

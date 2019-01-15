@@ -1,4 +1,8 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux';
+
+import {loginUser} from '../../store/actions/authActions';
+
 import {withStyles} from '@material-ui/core/styles';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 
@@ -38,7 +42,23 @@ const styles = theme => ({
 
 class SignInComponent extends Component {
 
-    
+    state = {
+        email: '',
+        password: ''
+    }
+
+    handleInputChange = event => {
+        const name = event.target.id;
+        const value = event.target.value
+
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleLogin = () => {
+        this.props.loginUser(this.state.email, this.state.password)
+    }
 
     render(){
 
@@ -54,26 +74,28 @@ class SignInComponent extends Component {
                             </Typography>
                             <div className={classes.loginControls} >
                                 <TextField 
-                                    id="outlined-email-input"
+                                    id="email"
                                     label="Email"
                                     className={classes.textField}
                                     type="email"
                                     name="email"
                                     autoComplete="email"
                                     margin="normal"
-                                    variant="outlined" />
+                                    variant="outlined" onChange={this.handleInputChange} />
 
                                 <TextField
-                                    id="outlined-password-input"
+                                    id="password"
                                     label="Password"
                                     className={classes.textField}
                                     type="password"
                                     autoComplete="current-password"
                                     margin="normal"
-                                    variant="outlined" />
-                                <Button variant="contained" color="primary" className={classes.button}>
-                                    Login
-                                </Button>
+                                    variant="outlined" onChange={this.handleInputChange} />
+                                <Button 
+                                    onClick={this.handleLogin}
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button}> Login </Button>
                             </div>
                         </Paper>
                     </Grid>
@@ -85,4 +107,11 @@ class SignInComponent extends Component {
 
 }
 
-export default withStyles(styles)(SignInComponent);
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loginUser: (email, password, callback) => dispatch(loginUser(email, password, callback))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(SignInComponent));

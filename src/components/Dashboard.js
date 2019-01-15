@@ -6,13 +6,15 @@ import ProjectListComponent from './projects/ProjectListComponent';
 import NewProjectComponent from './projects/NewProjectComponent';
 import UserListComponent from './users/UserListComponent';
 import NewUserComponent from './users/UserListComponent';
+import { AuthUserContext } from '../config/context';
+import withAuthorization from '../hoc/withAuthorization';
 
 class Dashboard extends React.Component {
 
-
+    static contextType = AuthUserContext;
 
     render(){
-
+        console.log('Context ', this.context);
         return (
            <Fragment>
                 <NavComponent />
@@ -32,7 +34,7 @@ class Dashboard extends React.Component {
 
 }
 
-export default Dashboard;
+export default withAuthorization(Dashboard);
 
 
 
