@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import { TextField, Grid, Paper, Button, Typography } from '@material-ui/core';
 
+
+import {loadUsers} from '../../store/actions/userActions';
+import {addProject} from '../../store/actions/projectActions';
 
 const styles = theme => ({
     textField: {
@@ -27,75 +31,100 @@ const styles = theme => ({
     }
 })
 
-const users = [
-    {
-      value: '123',
-      label: 'Andy Parinas',
-    },
-    {
-      value: '456',
-      label: 'Stephen Strange',
-    },
-    {
-      value: '789',
-      label: 'Tony Stark',
-    },
-    {
-      value: '190',
-      label: 'Peter Parker',
-    }
-  ]; 
-
 
 class NewProjectComponent extends Component {
 
+    state = {
+        data: {
+            name: '',
+            siteNumber: '',
+            siteName: '',
+            assignedToId: ''
+        }
+    }
+
+    componentDidMount(){
+        this.props.loadUsers()
+    }
+
+    handleInputChange = (event) => {
+        const id = event.target.id;
+        const value = event.target.value
+
+        this.setState({
+            ...this.state,
+            data: {
+                ...this.state.data,
+                [id]: value
+            }
+        })
+    }
+
+    handleSaveEvent = () => {
+
+        const selectedUser = this.props.users.find(user => {
+            return user.id === this.state.data.assignedToId
+        })
+        const project = {
+            ...this.state.data,
+            assignedToName: `${selectedUser.firstName} ${selectedUser.lastName}`
+        }
+
+        this.props.addProject(project);
+    }
+
+    handleCancelEvent = () => {
+
+    }
 
     render(){
-
         const {classes} = this.props;
 
         return(
             <div className='container'>
-               <Grid container spacing={12} justify='center'>
+               <Grid container spacing={16} justify='center'>
                     <Grid item xs={8} className={classes.formWrapper}>
                         <Paper className={classes.paper}>
                         <Typography variant='h5'> Create New Project </Typography>
-                            <TextField id="standard-name"
+                            <TextField id="name"
                                 label="Project Name"
                                 className={classes.textField}
                                 margin="normal"
-                                variant="outlined"/>
-                            <TextField id="standard-name"
+                                InputLabelProps={{shrink: true}}
+                                variant="outlined" onChange={this.handleInputChange} />
+                            <TextField id="siteNumber"
                                 label="Site Number"
                                 className={classes.textField}
                                 margin="normal"
-                                variant="outlined"/>
-                            <TextField id="standard-name"
+                                InputLabelProps={{shrink: true}}
+                                variant="outlined" onChange={this.handleInputChange} />
+                            <TextField id="siteName"
                                 label="Site Name"
                                 className={classes.textField}
                                 margin="normal"
-                                variant="outlined"/>
-                             <TextField id="standard-select-currency-native"
+                                InputLabelProps={{shrink: true}}
+                                variant="outlined" onChange={this.handleInputChange} />
+                             <TextField id="assignedToId"
                                 select label="Assigned To"
                                 className={classes.textField}
-                                SelectProps={{ native: true,
-                                    MenuProps: { className: classes.menu,},
-                                }}
+                                SelectProps={{ native: true, MenuProps: { className: classes.menu,}}}
                                 margin="normal"
-                                variant="outlined" >
-                                {users.map(option => (
-                                    <option key={option.value} value={option.value}>
-                                    {option.label}
-                                    </option>
-                                ))}
+                                InputLabelProps={{ shrink: true}}
+                                variant="outlined" onChange={this.handleInputChange} >
+                                    <option value={0}></option>
+                                    {this.props.users.map(user => (
+                                        <option key={user.id} value={user.id}>
+                                        {user.firstName} {user.lastName}
+                                        </option>
+                                    ))}
                                 </TextField>
                             <div className={classes.formControl} >
-                            <Button variant="contained" color="primary" className={classes.button}>
-                                Save
-                            </Button>
-                            <Button variant="contained" color="secondary" className={classes.button}>
-                                Cancel
-                            </Button>
+                            <Button variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} onClick={this.handleSaveEvent} > Save </Button>
+                            <Button variant="contained" 
+                                    color="secondary" 
+                                    className={classes.button} onClick={this.handleCancelEvent} > Cancel </Button>
                             </div>
                         </Paper>
                     </Grid>
@@ -106,4 +135,18 @@ class NewProjectComponent extends Component {
 
 }
 
-export default withStyles(styles)(NewProjectComponent);
+
+const mapStateToProps = state => {
+    return {
+        users: state.users.users
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loadUsers: () => dispatch(loadUsers()),
+        addProject: (project) => dispatch(addProject(project))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NewProjectComponent));

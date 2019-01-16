@@ -1,6 +1,7 @@
 import db from '../../config/Firebase';
 
-import {PROJECT_LIST} from './actionTypes'
+import {PROJECT_LIST, ADD_PROJECT} from './actionTypes'
+
 
 
 export const loadProjects = () => dispatch => {
@@ -27,7 +28,20 @@ export const loadProjects = () => dispatch => {
         console.log(error)
 
     })
-
-
-
 }
+
+export const addProject = (project) => dispatch => {
+
+    db.collection('projects').add(project).then(docRef => {
+
+        docRef.get().then(documentSnapshot => {
+            console.log(documentSnapshot.data())
+        })
+
+    }).catch(error => {
+        console.log(error)
+
+    })
+}
+
+
