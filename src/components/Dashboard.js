@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import {Route, Redirect, Switch} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import NavComponent from './layouts/navigations/NavComponent';
 import ProjectListComponent from './projects/ProjectListComponent';
@@ -9,15 +10,22 @@ import NewUserComponent from './users/UserListComponent';
 import { AuthUserContext } from '../config/context';
 import withAuthorization from '../hoc/withAuthorization';
 
+import {logoutUser} from '../store/actions/authActions';
+
 class Dashboard extends React.Component {
 
     static contextType = AuthUserContext;
+
+
+    handleLogout = () => {
+        this.props.logoutUser(() => this.props.history.push('/login'))
+    }
 
     render(){
         console.log('Context ', this.context);
         return (
            <Fragment>
-                <NavComponent />
+                <NavComponent onLogout={this.handleLogout}  />
                 <div className='content'>
                     <Switch>
                         <Route path='/projects/all' component={ProjectListComponent} />
@@ -34,7 +42,14 @@ class Dashboard extends React.Component {
 
 }
 
-export default withAuthorization(Dashboard);
+const mapDispatchToProps = dispatch => {
+    return {
+        logoutUser: (callback) => dispatch(logoutUser(callback))
+    }
+}
+
+export default withAuthorization(
+    connect(null, mapDispatchToProps)(Dashboard));
 
 
 

@@ -31,11 +31,15 @@ const styles = theme => ({
         flexDirection: 'column',
         width: '80%',
         margin: 'auto',
-        marginTop: 50
+        // marginTop: 50
       },
       button: {
         margin: theme.spacing.unit,
       },
+      loginHeader: {
+          textAlign: 'center',
+          marginBottom: 20
+      }
 })
 
 
@@ -57,21 +61,25 @@ class SignInComponent extends Component {
     }
 
     handleLogin = () => {
-        this.props.loginUser(this.state.email, this.state.password)
+        this.props.loginUser(
+            this.state.email, 
+            this.state.password,
+            ()=>this.props.history.push('/'))
     }
 
     render(){
 
-        const {classes} = this.props
+        const {classes, authError} = this.props
 
         return (
             <div className={classes.root}>
                 <Grid container spacing={24} justify='center' >
                     <Grid item xs={4} className={classes.formWrapper} >
+                        <div className={classes.loginHeader} >
+                            <Typography variant='h4'> Document Manager </Typography>
+                            <Typography variant='h5'> LOGIN </Typography>
+                        </div>
                         <Paper className={classes.paper}>
-                            <Typography variant='h5'>
-                                LOGIN
-                            </Typography>
                             <div className={classes.loginControls} >
                                 <TextField 
                                     id="email"
@@ -96,6 +104,9 @@ class SignInComponent extends Component {
                                     variant="contained" 
                                     color="primary" 
                                     className={classes.button}> Login </Button>
+                                <Typography variant="caption" gutterBottom color='error'>
+                                    { authError? authError : '' }
+                                </Typography>
                             </div>
                         </Paper>
                     </Grid>
@@ -107,6 +118,12 @@ class SignInComponent extends Component {
 
 }
 
+const mapStateToProps = state => {
+    return {
+        authError: state.auth.authError
+    }
+}
+
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -114,4 +131,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(SignInComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SignInComponent));

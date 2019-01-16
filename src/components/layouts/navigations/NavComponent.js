@@ -27,7 +27,7 @@ const NavComponent = props => {
                     </ul>
                 </div>
                 <div className='navigation__footer'>
-                    <a href='#' className='navigation-link'>Logout</a>
+                    <a className='navigation-link' onClick={props.onLogout} >Logout</a>
                 </div>
             </nav>
         </div>

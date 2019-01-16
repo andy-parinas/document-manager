@@ -54,7 +54,7 @@
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-
+    cursor: pointer;
 }
 
 .navigation-link::before{
