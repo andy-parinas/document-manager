@@ -3,7 +3,9 @@ import React from 'react';
 import ToolBar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete';
+import RefreshIcon from '@material-ui/icons/Refresh'
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import {withStyles} from '@material-ui/core/styles';
@@ -33,6 +35,9 @@ const styles = theme => ({
     },
     title: {
       flex: '0 0 auto',
+    },
+    toolTip: {
+        display: 'flex'
     }
 })
 
@@ -46,19 +51,47 @@ const EnhancedTableToolbar = props => {
         <Typography variant='h6' id='tableTitle'> { tableTitle } </Typography>
     )
 
-    const toolTip = numSelected > 0 ? (
-        <Tooltip title='Delete'>
-            <IconButton aria-label='Delete'>
-                <DeleteIcon />
-            </IconButton>
-        </Tooltip>
-    ) : (
-        <Tooltip title='Filter'>
-            <IconButton aria-label='Filter'>
-                <FilterListIcon />
-            </IconButton>
-        </Tooltip>
-    )
+
+    let toolTip = ( <Tooltip title='Filter'>
+                        <IconButton aria-label='Filter'>
+                            <RefreshIcon />
+                        </IconButton>
+                    </Tooltip>)
+
+    if(numSelected === 1){
+        toolTip = (
+            <div className={classes.toolTip}>
+                <Tooltip title='Copy'>
+                    <IconButton aria-label='Duplicate'>
+                        <FileCopyIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Delete'>
+                    <IconButton aria-label='Delete'>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            </div>
+        )
+    }else if (numSelected > 1) {
+        toolTip = (
+            <Tooltip title='Delete'>
+                <IconButton aria-label='Delete'>
+                    <DeleteIcon />
+                </IconButton>
+            </Tooltip>
+        )
+    }
+
+    // const toolTip = numSelected > 0 ? (
+    
+    // ) : (
+    //     <Tooltip title='Filter'>
+    //         <IconButton aria-label='Filter'>
+    //             <RefreshIcon />
+    //         </IconButton>
+    //     </Tooltip>
+    // )
 
     return (
         <ToolBar className={classes.root}>

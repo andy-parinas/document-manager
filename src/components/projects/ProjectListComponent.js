@@ -14,8 +14,8 @@ import EnhancedTable from '../../lib/tables/enhanced-table/EnhancedTable';
 
 const columns = [
     { id: 'name', numeric: false, disablePadding: false, label: 'Project Name' },
-    { id: 'siteNumber', numeric: true, disablePadding: false, label: 'Site Number' },
-    { id: 'siteName', numeric: true, disablePadding: false, label: 'Site Name' },
+    // { id: 'siteNumber', numeric: true, disablePadding: false, label: 'Site Number' },
+    // { id: 'siteName', numeric: true, disablePadding: false, label: 'Site Name' },
     { id: 'assignedToName', numeric: true, disablePadding: false, label: 'Assigned To' },
     { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
   ];
@@ -70,9 +70,13 @@ class ProjectListComponent extends Component {
 
     }
 
-    componentWillUnmount(){
-        // this.listener()
+    handleRowSelected = (id) => {
+        console.log('SELECTED' , id)
+        this.props.history.push(`/projects/${id}`)
     }
+
+
+
 
     render(){
         const {classes} = this.props;
@@ -88,7 +92,8 @@ class ProjectListComponent extends Component {
                         </Button>
                     </div>               
                     <div className='project-list-table'>
-                        <EnhancedTable columns={columns} data={this.props.projects} />
+                        <EnhancedTable columns={columns} onRowSelected={this.handleRowSelected}
+                            data={this.props.projects} />
                     </div>
                 </div>
             </div>

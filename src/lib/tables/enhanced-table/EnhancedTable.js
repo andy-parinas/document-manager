@@ -25,7 +25,10 @@ const styles = theme => ({
         overflowX: 'auto',
       },
       table: {
-        minWidth: 1020
+        minWidth: 800
+      },
+      clickable: {
+          cursor: 'pointer'
       }
 })
 
@@ -66,6 +69,10 @@ class EnhancedTable extends Component {
    
     }
 
+    handleSelectAllClicked = () => {
+
+    }
+
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render(){
@@ -78,7 +85,10 @@ class EnhancedTable extends Component {
 
             const cells = columns.map(c => {
                 return (
-                    <TableCell  component="th" scope="row" key={`${d.id}-${c.id}`}>
+                    <TableCell className={classes.clickable} 
+                                component="th" 
+                                scope="row" 
+                                key={`${d.id}-${c.id}`} onClick={() => this.props.onRowSelected(d.id)} >
                         { d[c.id] }
                     </TableCell>
                 )

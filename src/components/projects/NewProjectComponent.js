@@ -82,7 +82,7 @@ class NewProjectComponent extends Component {
 
         return(
             <div className='container'>
-               <Grid container spacing={16} justify='center'>
+               <Grid container spacing={0} justify='center'>
                     <Grid item xs={8} className={classes.formWrapper}>
                         <Paper className={classes.paper}>
                         <Typography variant='h5'> Create New Project </Typography>

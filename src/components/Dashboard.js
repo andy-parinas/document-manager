@@ -11,6 +11,7 @@ import { AuthUserContext } from '../config/context';
 import withAuthorization from '../hoc/withAuthorization';
 
 import {logoutUser} from '../store/actions/authActions';
+import ProjectDetailComponent from './projects/ProjectDetailComponent';
 
 class Dashboard extends React.Component {
 
@@ -30,6 +31,7 @@ class Dashboard extends React.Component {
                     <Switch>
                         <Route path='/projects/all' component={ProjectListComponent} />
                         <Route path='/projects/new' component={NewProjectComponent} />
+                        <Route path='/projects/:id' component={ProjectDetailComponent} />
                         <Route path='/users/all' component={UserListComponent} />
                         <Route path='/users/new' component={NewUserComponent} />
                         <Redirect to='/projects/all' from='/' />
