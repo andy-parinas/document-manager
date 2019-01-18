@@ -11,7 +11,7 @@ import { AuthUserContext } from '../config/context';
 import withAuthorization from '../hoc/withAuthorization';
 
 import {logoutUser} from '../store/actions/authActions';
-import ProjectDetailComponent from './projects/ProjectDetailComponent';
+import ProjectDetailComponent from './projects/project-detail/ProjectDetailComponent';
 
 class Dashboard extends React.Component {
 
