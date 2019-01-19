@@ -1,12 +1,16 @@
 import db from '../../config/Firebase';
 
-import {PROJECT_LIST, ADD_PROJECT} from './actionTypes'
+import {PROJECT_LIST, ADD_PROJECT, PROJECT_DETAIL, START_LOADING, END_LOADING} from './actionTypes'
 
 
 
 export const loadProjects = () => dispatch => {
 
     const data = []
+
+    dispatch({
+        type: START_LOADING
+    })
 
     db.collection("projects").get().then(querySnapshot => {
 
@@ -23,9 +27,16 @@ export const loadProjects = () => dispatch => {
             projects: data
         })
 
+        dispatch({
+            type: END_LOADING
+        })
 
     }).catch(error => {
         console.log(error)
+
+        dispatch({
+            type: END_LOADING
+        })
 
     })
 }
@@ -44,4 +55,42 @@ export const addProject = (project) => dispatch => {
     })
 }
 
+
+export const getProject =(id) => dispatch => {
+
+    dispatch({
+        type: START_LOADING
+    })
+
+    db.collection('projects').doc(id).get().then(doc => {
+
+        if(doc.exists){
+            
+            console.log(doc.id);
+
+            dispatch({
+                type: PROJECT_DETAIL,
+                project: doc.data()
+            })
+
+        }else {
+            dispatch({
+                type: PROJECT_DETAIL,
+                project: null
+            })
+        }
+
+        dispatch({
+            type: END_LOADING
+        })
+
+    }).catch(error => {
+        console.log(error);
+
+        dispatch({
+            type: END_LOADING
+        })
+    })
+
+}
 

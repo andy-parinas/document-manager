@@ -6,6 +6,7 @@ import { TextField, Grid, Paper, Button, Typography } from '@material-ui/core';
 
 import {loadUsers} from '../../store/actions/userActions';
 import {addProject} from '../../store/actions/projectActions';
+import ProjectForm from './project-form/ProjectForm';
 
 const styles = theme => ({
     textField: {
@@ -74,7 +75,7 @@ class NewProjectComponent extends Component {
     }
 
     handleCancelEvent = () => {
-
+        this.props.history.push('/projects/all');
     }
 
     render(){
@@ -84,49 +85,10 @@ class NewProjectComponent extends Component {
             <div className='container'>
                <Grid container spacing={0} justify='center'>
                     <Grid item xs={8} className={classes.formWrapper}>
-                        <Paper className={classes.paper}>
-                        <Typography variant='h5'> Create New Project </Typography>
-                            <TextField id="name"
-                                label="Project Name"
-                                className={classes.textField}
-                                margin="normal"
-                                InputLabelProps={{shrink: true}}
-                                variant="outlined" onChange={this.handleInputChange} />
-                            <TextField id="siteNumber"
-                                label="Site Number"
-                                className={classes.textField}
-                                margin="normal"
-                                InputLabelProps={{shrink: true}}
-                                variant="outlined" onChange={this.handleInputChange} />
-                            <TextField id="siteName"
-                                label="Site Name"
-                                className={classes.textField}
-                                margin="normal"
-                                InputLabelProps={{shrink: true}}
-                                variant="outlined" onChange={this.handleInputChange} />
-                             <TextField id="assignedToId"
-                                select label="Assigned To"
-                                className={classes.textField}
-                                SelectProps={{ native: true, MenuProps: { className: classes.menu,}}}
-                                margin="normal"
-                                InputLabelProps={{ shrink: true}}
-                                variant="outlined" onChange={this.handleInputChange} >
-                                    <option value={0}></option>
-                                    {this.props.users.map(user => (
-                                        <option key={user.id} value={user.id}>
-                                        {user.firstName} {user.lastName}
-                                        </option>
-                                    ))}
-                                </TextField>
-                            <div className={classes.formControl} >
-                            <Button variant="contained" 
-                                    color="primary" 
-                                    className={classes.button} onClick={this.handleSaveEvent} > Save </Button>
-                            <Button variant="contained" 
-                                    color="secondary" 
-                                    className={classes.button} onClick={this.handleCancelEvent} > Cancel </Button>
-                            </div>
-                        </Paper>
+                       <ProjectForm onInputChange={this.handleInputChange}
+                            users={this.props.users} 
+                            onSave={this.handleSaveEvent} 
+                            onCancel={this.handleCancelEvent} />
                     </Grid>
                </Grid>
             </div>

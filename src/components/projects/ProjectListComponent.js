@@ -6,10 +6,8 @@ import {connect} from 'react-redux';
 
 import {loadProjects} from '../../store/actions/projectActions';
 import EnhancedTable from '../../lib/tables/enhanced-table/EnhancedTable';
-
-// import db from '../../config/Firebase';
-
-
+import { Paper, Typography } from '@material-ui/core';
+import LoadScreen from '../../lib/load-screen/LoadScreen';
 
 
 const columns = [
@@ -36,7 +34,12 @@ const styles = theme => ({
         height: 50,
         marginTop: 30,
         padding: 10
-    }
+    },
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        padding: 20
+    },
 })
 
 
@@ -76,11 +79,20 @@ class ProjectListComponent extends Component {
     }
 
 
-
-
     render(){
-        const {classes} = this.props;
-        console.log(this.props.projects)
+        const {classes, loading} = this.props;
+        
+        let tableData = <LoadScreen />
+
+        if(this.props.projects.length > 0 && !loading){
+            tableData = <EnhancedTable columns={columns} onRowSelected={this.handleRowSelected}
+                            data={this.props.projects} loading={loading} />
+        }
+
+        if(this.props.projects.length === 0 && !loading){
+            tableData = <Typography variant='h5'>No Projects to Display</Typography>
+        }
+
         return(
             <div className='container'>
                 <div className={classes.projectListContent}>
@@ -92,8 +104,10 @@ class ProjectListComponent extends Component {
                         </Button>
                     </div>               
                     <div className='project-list-table'>
-                        <EnhancedTable columns={columns} onRowSelected={this.handleRowSelected}
-                            data={this.props.projects} />
+                        <Paper className={classes.root}>
+                            <EnhancedTable columns={columns} onRowSelected={this.handleRowSelected}
+                                data={this.props.projects} loading={loading} />
+                        </Paper>
                     </div>
                 </div>
             </div>
@@ -104,7 +118,8 @@ class ProjectListComponent extends Component {
 
 const mapStateToProps = state => {
     return {
-        projects: state.projects.projects
+        projects: state.projects.projects,
+        loading: state.utility.loading
     }
 }
 

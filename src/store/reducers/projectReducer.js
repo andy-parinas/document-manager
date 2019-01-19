@@ -1,7 +1,8 @@
-import {PROJECT_LIST} from '../actions/actionTypes'
+import {PROJECT_LIST, PROJECT_DETAIL} from '../actions/actionTypes'
 
 const initialState = {
-    projects: []
+    projects: [],
+    project: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 projects: action.projects
+            }
+        case PROJECT_DETAIL:
+            return {
+                ...state,
+                project: action.project
             }
         default:
             return state

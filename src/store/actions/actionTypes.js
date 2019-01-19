@@ -1,6 +1,10 @@
 
+export const START_LOADING = 'start_loading';
+export const END_LOADING = 'end_loading';
+
 export const PROJECT_LIST = 'project_list';
 export const ADD_PROJECT = 'add_user';
+export const PROJECT_DETAIL = 'project_detail';
 
 export const AUTH_SUCCESS = 'user_login';
 export const USER_LOGOUT = 'user_logout';

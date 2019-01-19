@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -13,6 +13,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolBar from './EnchancedTableToolbar';
+import LoadScreen from '../../load-screen/LoadScreen';
+import { Typography, Divider } from '@material-ui/core';
 
 
 
@@ -76,7 +78,7 @@ class EnhancedTable extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render(){
-        const {classes, columns,  data} = this.props;
+        const {classes, columns,  data, loading} = this.props;
         const { order, orderBy, selected} = this.state;
 
         const rows = data.map(d => {
@@ -104,10 +106,10 @@ class EnhancedTable extends Component {
             );
         });
 
+        let table = <LoadScreen />
 
-        return(
-            <Paper className={classes.root}>
-                <EnhancedTableToolBar numSelected={selected.length} tableTitle='Projects' />
+        if(data.length > 0 && !loading){
+            table = (
                 <div className={classes.tableWrapper} >
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <EnhancedTableHead  numSelected={selected.length} columns={columns}
@@ -122,7 +124,18 @@ class EnhancedTable extends Component {
                         </TableBody>
                     </Table>
                 </div>
-            </Paper>
+            )
+        }
+
+        if(data.length === 0 && !loading){
+            table = <Typography variant='h5'>No Data Found</Typography>
+        }
+
+        return(
+            <Fragment>
+                <EnhancedTableToolBar numSelected={selected.length} tableTitle='Projects' />
+                { table }
+            </Fragment>
         )
     }
 
