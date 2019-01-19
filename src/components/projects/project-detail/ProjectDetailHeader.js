@@ -19,7 +19,7 @@ const styles = theme => ({
         alignItems: 'center',
         width: 600,
         marginTop: 10,
-        marginLeft: 60
+        marginLeft: 50
     },
     typography: {
         marginLeft: 5,

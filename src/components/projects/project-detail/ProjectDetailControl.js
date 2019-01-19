@@ -15,12 +15,12 @@ const styles = theme => ({
 
 const ProjectDetailControl = props => {
 
-    const {classes} = props;
+    const {classes, onBack, onEdit, onCopy, onDelete} = props;
 
     return(
         <div className={classes.control} >
             <Tooltip title='Back'>
-                <IconButton aria-label="Edit"><ArrowBackIcon /> </IconButton>
+                <IconButton aria-label="Edit" onClick={onBack} ><ArrowBackIcon /> </IconButton>
             </Tooltip>
             <div>
                 <Tooltip title='Edit'>

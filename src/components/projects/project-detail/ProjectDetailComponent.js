@@ -26,6 +26,24 @@ const styles = theme => ({
 class ProjectDetailComponent extends React.Component {
 
 
+
+    onBackHandler = () => {
+        this.props.history.goBack();
+    }
+
+    onEditHandler = () => {
+
+    }
+
+    onCopyHandler = () => {
+
+    }
+
+    onDeleteHandler = () => {
+
+    }
+
+
     render(){
 
         const {classes} = this.props
@@ -44,7 +62,7 @@ class ProjectDetailComponent extends React.Component {
                             
                             <Divider className={classes.divider} />
 
-                            <ProjectDetailControl />
+                            <ProjectDetailControl onBack={this.onBackHandler} />
                                                      
                         </Paper>
                     </Grid>
