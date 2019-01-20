@@ -46,6 +46,10 @@ const ProjectDetailHeader = props => {
             <Typography variant='body1'>Site Name: </Typography>
             <Typography className={classes.typography} variant='subtitle2'> {project.siteName} </Typography>
         </div>
+        <div className={classes.subtitle} >
+            <Typography variant='body1'>Assigned To: </Typography>
+            <Typography className={classes.typography} variant='subtitle2'>{project.assignedToName}</Typography>
+        </div>
        </Fragment>
     )
 }

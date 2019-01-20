@@ -10,7 +10,7 @@ import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailTask from './ProjectDetailTask';
 import ProjectDetailControl from './ProjectDetailControl';
 
-import {getProject} from '../../../store/actions/projectActions';
+import {getProject, getProjectTasks} from '../../../store/actions/projectActions';
 import LoadScreen from '../../../lib/load-screen/LoadScreen';
 
 
@@ -57,16 +57,32 @@ class ProjectDetailComponent extends React.Component {
 
     render(){
 
+        const id = this.props.match.params.id;
         const {classes} = this.props
         
         let details = <LoadScreen />
+        let tasks = ''
+
+
+      
 
         if(this.props.project && !this.props.loading) {
+
+            if(this.props.project.tasks.length > 0 ){
+                tasks = <ProjectDetailTask  tasks={this.props.project.tasks} />
+            }
+    
+            if(this.props.project.tasks.length === 0){
+                tasks =  <Typography variant='h6'> No Tasks Found </Typography>
+            }
+
             details = (
                 <Fragment> 
                     <ProjectDetailHeader project={this.props.project} />
                     <Divider className={classes.divider} />
-                    <ProjectDetailTask />
+
+                    { tasks }
+
                     <Divider className={classes.divider} />
                     <ProjectDetailControl onBack={this.onBackHandler} />
                 </Fragment>

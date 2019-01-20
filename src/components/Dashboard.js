@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
     }
 
     render(){
-        console.log('Context ', this.context);
+        
         return (
            <Fragment>
                 <NavComponent onLogout={this.handleLogout}  />
