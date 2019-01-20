@@ -30,21 +30,21 @@ const styles = theme => ({
 
 const ProjectDetailHeader = props => {
 
-    const {classes} = props;
+    const {classes, project} = props;
 
     return(
        <Fragment>
         <div className={classes.mainTitle} >
             <div className={classes.titleHeading}>
                 <Avatar className={classes.avatar}><WorkIcon /> </Avatar>
-                <Typography variant='h4' className={classes.typography}> Project Title </Typography>
+                <Typography variant='h4' className={classes.typography}> {project.name} </Typography>
             </div>
         </div>
         <div className={classes.subtitle} >
             <Typography variant='body1'>Site Number: </Typography>
-            <Typography className={classes.typography} variant='subtitle2'>QLD-12312312</Typography>
+            <Typography className={classes.typography} variant='subtitle2'>{project.siteNumber}</Typography>
             <Typography variant='body1'>Site Name: </Typography>
-            <Typography className={classes.typography} variant='subtitle2'>Gold Coast Site A1</Typography>
+            <Typography className={classes.typography} variant='subtitle2'> {project.siteName} </Typography>
         </div>
        </Fragment>
     )

@@ -64,7 +64,7 @@ class ProjectDetailComponent extends React.Component {
         if(this.props.project && !this.props.loading) {
             details = (
                 <Fragment> 
-                    <ProjectDetailHeader />
+                    <ProjectDetailHeader project={this.props.project} />
                     <Divider className={classes.divider} />
                     <ProjectDetailTask />
                     <Divider className={classes.divider} />
