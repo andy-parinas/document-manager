@@ -5,22 +5,34 @@ import ProjectForm from './project-form/ProjectForm';
 import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 
 import {loadUsers} from '../../store/actions/userActions';
+import {updateProject} from '../../store/actions/projectActions';
 
 
 class EditProjectComponent extends React.Component{
 
-    state = {
-        data: {
-            id: '',
-            name: '',
-            siteNumber: '',
-            siteName: '',
-            assignedToid: ''
-        }
-    }
 
     componentDidMount(){
         this.props.loadUsers();
+    }
+
+    onProjectSaveHandler = (data) => {
+
+        const user = this.props.users.find(u => {
+            return u.id === data.assignedToId 
+        })
+
+        const project = {
+            name: data.name,
+            siteNumber: data.siteNumber,
+            siteName: data.siteName,
+            assignedToId: data.assignedToId,
+            assignedToName: `${user.firstName} ${user.lastName}`
+        }
+
+        this.props.updateProject(data.id, project, () => {
+            this.props.onDialogClose();
+            this.props.openSnackbar();
+        });
     }
 
     render(){
@@ -31,6 +43,7 @@ class EditProjectComponent extends React.Component{
                 <DialogContent>
                     <ProjectForm users={this.props.users} 
                         data={this.props.data} 
+                        onSave={this.onProjectSaveHandler}
                         onCancel={this.props.onDialogClose} />
                 </DialogContent>
             </Dialog>
@@ -48,7 +61,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadUsers: () => dispatch(loadUsers())
+        loadUsers: () => dispatch(loadUsers()),
+        updateProject: (id, data, callback) => dispatch(updateProject(id, data, callback))
     }
 }
 

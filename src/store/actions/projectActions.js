@@ -124,6 +124,45 @@ export const getProject =(id) => dispatch => {
 
 }
 
+export const updateProject = (id, updates, callback) => (dispatch, getState) => {
+
+    const tasks = getState().projects.project.tasks
+
+    dispatch({
+        type: START_SUB_LOADING
+    })
+
+    db.collection('projects').doc(id).set({
+        ...updates
+    }).then(result => {
+
+        const project = {
+            id: id,
+            ...updates,
+            tasks: tasks
+        }
+
+        dispatch({
+            type: PROJECT_DETAIL,
+            project: project
+        })
+
+        dispatch({
+            type: END_SUB_LOADING
+        })
+
+        if(callback) callback();
+
+    }).catch(error => {
+        console.log(error)
+        dispatch({
+            type: END_SUB_LOADING
+        })
+
+    })
+
+}
+
 export const getProjectTasks = (id) => dispatch => {
 
     const docRef = db.collection('projects').doc(id);

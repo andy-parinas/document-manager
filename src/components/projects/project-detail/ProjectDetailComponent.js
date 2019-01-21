@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 
 import {withStyles} from '@material-ui/core/styles';
-import { Paper,  Divider, CircularProgress, Typography } from '@material-ui/core';
+import { Paper,  Divider, CircularProgress, Typography, Snackbar } from '@material-ui/core';
 
 import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailTask from './ProjectDetailTask';
@@ -34,7 +34,8 @@ const styles = theme => ({
 class ProjectDetailComponent extends React.Component {
 
     state = {
-        openEdit: false
+        openEdit: false,
+        onSnackbar: false
     }
 
 
@@ -69,6 +70,20 @@ class ProjectDetailComponent extends React.Component {
 
     }
 
+    openSnackbar = () => {
+        this.setState({
+            ...this.state,
+            openSnackbar: true
+        })
+    }
+
+    closeSnackbar = () => {
+        this.setState({
+            ...this.state,
+            openSnackbar: false
+        })
+    }
+
 
     render(){
 
@@ -83,12 +98,16 @@ class ProjectDetailComponent extends React.Component {
 
         if(this.props.project && !this.props.loading) {
 
-            if(this.props.project.tasks.length > 0 ){
+            if(this.props.project.tasks && this.props.project.tasks.length > 0 ){
                 tasks = <ProjectDetailTask  tasks={this.props.project.tasks} />
             }
     
-            if(this.props.project.tasks.length === 0){
+            if(this.props.project.tasks && this.props.project.tasks.length === 0){
                 tasks =  <Typography variant='h6'> No Tasks Found </Typography>
+            }
+
+            if(!this.props.project.tasks){
+                tasks = <Typography variant='h6'> No Tasks Found </Typography>
             }
 
             details = (
@@ -118,8 +137,16 @@ class ProjectDetailComponent extends React.Component {
                             { details }                             
                         </Paper>
                     </Grid>
-                    <EditProjectComponent open={this.state.openEdit} onDialogClose={this.closeDialogHandler} data={this.props.project} />
+                    <EditProjectComponent open={this.state.openEdit}
+                        openSnackbar={this.openSnackbar}
+                        onDialogClose={this.closeDialogHandler} 
+                        data={this.props.project} />
                 </Grid>
+                <Snackbar  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            open={this.state.openSnackbar}
+                            onClose={this.closeSnackbar}
+                            ContentProps={{'aria-describedby': 'message-id',}}
+                            message={<span id="message-id">Project Updated </span>} />
             </div>
         )
     }

@@ -120,7 +120,7 @@ class ProjectForm extends React.Component {
                 <div className={classes.formControl} >
                 <Button variant="contained" 
                         color="primary" 
-                        className={classes.button} onClick={onSave} > Save </Button>
+                        className={classes.button} onClick={() => onSave(this.state.data)} > Save </Button>
                 <Button variant="contained" 
                         color="secondary" 
                         className={classes.button} onClick={onCancel} > Cancel </Button>
