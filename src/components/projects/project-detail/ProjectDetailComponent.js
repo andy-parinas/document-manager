@@ -118,7 +118,7 @@ class ProjectDetailComponent extends React.Component {
                             { details }                             
                         </Paper>
                     </Grid>
-                    <EditProjectComponent open={this.state.openEdit} onDialogClose={this.closeDialogHandler} />
+                    <EditProjectComponent open={this.state.openEdit} onDialogClose={this.closeDialogHandler} data={this.props.project} />
                 </Grid>
             </div>
         )
@@ -129,8 +129,7 @@ class ProjectDetailComponent extends React.Component {
 const mapStateToProps = state => {
     return {
         project: state.projects.project,
-        loading: state.utility.loading,
-        users: state.users.users
+        loading: state.utility.loading
     }
 }
 

@@ -29,7 +29,9 @@ class EditProjectComponent extends React.Component{
             <Dialog open={this.props.open} onClose={this.props.onDialogClose} >
                 <DialogTitle> Edit Project </DialogTitle>
                 <DialogContent>
-                    <ProjectForm users={this.props.users} />
+                    <ProjectForm users={this.props.users} 
+                        data={this.props.data} 
+                        onCancel={this.props.onDialogClose} />
                 </DialogContent>
             </Dialog>
         )

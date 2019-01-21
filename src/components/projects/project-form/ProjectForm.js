@@ -26,8 +26,56 @@ const style = theme => ({
 
 class ProjectForm extends React.Component {
 
+    state = {
+        data: {
+            id: '',
+            name: '',
+            siteNumber: '',
+            siteName: '',
+            assignedToId: 0
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+
+        console.log('getDeriveStatefromProps')
+        if(nextProps.data){
+            if(nextProps.data.id !== prevState.data.id){
+                console.log('Changing State')
+                return {
+                    ...prevState,
+                   data: {
+                       ...prevState.data,
+                       id: nextProps.data.id,
+                       name: nextProps.data.name,
+                       siteNumber: nextProps.data.siteNumber,
+                       siteName: nextProps.data.siteName,
+                       assignedToId: nextProps.data.assignedToId
+                   }
+                }
+            }
+        }
+
+        return null
+    }
+
+
+    onInputChangeHandler = event => {
+        const id = event.target.id;
+        const value = event.target.value;
+
+        this.setState({
+            ...this.state,
+            data: {
+                ...this.state.data,
+                [id]: value
+            }
+        })
+    }
 
     render(){
+
+        console.log(this.state)
 
         const {classes, onInputChange, onSave, onCancel} = this.props
 
@@ -38,26 +86,30 @@ class ProjectForm extends React.Component {
                     className={classes.textField}
                     margin="normal"
                     InputLabelProps={{shrink: true}}
-                    variant="outlined" onChange={onInputChange} />
+                    value={this.state.data.name}
+                    variant="outlined" onChange={this.onInputChangeHandler} />
                 <TextField id="siteNumber"
                     label="Site Number"
                     className={classes.textField}
                     margin="normal"
                     InputLabelProps={{shrink: true}}
-                    variant="outlined" onChange={onInputChange} />
+                    value={this.state.data.siteNumber}
+                    variant="outlined" onChange={this.onInputChangeHandler} />
                 <TextField id="siteName"
                     label="Site Name"
                     className={classes.textField}
                     margin="normal"
                     InputLabelProps={{shrink: true}}
-                    variant="outlined" onChange={onInputChange} />
+                    value={this.state.data.siteName}
+                    variant="outlined" onChange={this.onInputChangeHandler} />
                  <TextField id="assignedToId"
                     select label="Assigned To"
                     className={classes.textField}
                     SelectProps={{ native: true, MenuProps: { className: classes.menu,}}}
                     margin="normal"
                     InputLabelProps={{ shrink: true}}
-                    variant="outlined" onChange={onInputChange} >
+                    value={this.state.data.assignedToId}
+                    variant="outlined" onChange={this.onInputChangeHandler} >
                         <option value={0}></option>
                         {this.props.users.map(user => (
                             <option key={user.id} value={user.id}>

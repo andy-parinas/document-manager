@@ -86,6 +86,7 @@ export const getProject =(id) => dispatch => {
                 }
 
                 const project = {
+                    id: doc.id,
                     ...doc.data(),
                     tasks: tasks
                 }
