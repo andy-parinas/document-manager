@@ -9,6 +9,7 @@ import { Paper,  Divider, CircularProgress, Typography } from '@material-ui/core
 import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailTask from './ProjectDetailTask';
 import ProjectDetailControl from './ProjectDetailControl';
+import EditProjectComponent from '../EditProjectComponent'
 
 import {getProject, getProjectTasks} from '../../../store/actions/projectActions';
 import LoadScreen from '../../../lib/load-screen/LoadScreen';
@@ -32,6 +33,17 @@ const styles = theme => ({
 
 class ProjectDetailComponent extends React.Component {
 
+    state = {
+        openEdit: false
+    }
+
+
+    closeDialogHandler = () => {
+        this.setState({
+            ...this.state,
+            openEdit: false
+        })
+    }
 
     componentDidMount(){
         const id = this.props.match.params.id;
@@ -43,7 +55,10 @@ class ProjectDetailComponent extends React.Component {
     }
 
     onEditHandler = () => {
-
+        this.setState({
+            ...this.state,
+            openEdit: true
+        })
     }
 
     onCopyHandler = () => {
@@ -84,7 +99,7 @@ class ProjectDetailComponent extends React.Component {
                     { tasks }
 
                     <Divider className={classes.divider} />
-                    <ProjectDetailControl onBack={this.onBackHandler} />
+                    <ProjectDetailControl onBack={this.onBackHandler} onEdit={this.onEditHandler} />
                 </Fragment>
             )
         }
@@ -103,6 +118,7 @@ class ProjectDetailComponent extends React.Component {
                             { details }                             
                         </Paper>
                     </Grid>
+                    <EditProjectComponent open={this.state.openEdit} onDialogClose={this.closeDialogHandler} />
                 </Grid>
             </div>
         )
@@ -113,7 +129,8 @@ class ProjectDetailComponent extends React.Component {
 const mapStateToProps = state => {
     return {
         project: state.projects.project,
-        loading: state.utility.loading
+        loading: state.utility.loading,
+        users: state.users.users
     }
 }
 

@@ -24,7 +24,7 @@ const ProjectDetailControl = props => {
             </Tooltip>
             <div>
                 <Tooltip title='Edit'>
-                    <IconButton aria-label="Edit"><EditIcon /> </IconButton>
+                    <IconButton aria-label="Edit" onClick={onEdit} ><EditIcon /> </IconButton>
                 </Tooltip>
                 <Tooltip title='Copy'>
                     <IconButton aria-label="Copy"><FileCopyIcon /> </IconButton>

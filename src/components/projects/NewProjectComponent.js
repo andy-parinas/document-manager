@@ -85,10 +85,13 @@ class NewProjectComponent extends Component {
             <div className='container'>
                <Grid container spacing={0} justify='center'>
                     <Grid item xs={8} className={classes.formWrapper}>
-                       <ProjectForm onInputChange={this.handleInputChange}
-                            users={this.props.users} 
-                            onSave={this.handleSaveEvent} 
-                            onCancel={this.handleCancelEvent} />
+                        <Paper className={classes.paper}>
+                            <Typography variant='h5'> Create New Project </Typography>
+                            <ProjectForm onInputChange={this.handleInputChange}
+                                users={this.props.users} 
+                                onSave={this.handleSaveEvent} 
+                                onCancel={this.handleCancelEvent} />
+                        </Paper>
                     </Grid>
                </Grid>
             </div>

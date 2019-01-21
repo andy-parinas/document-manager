@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {withStyles} from '@material-ui/core/styles';
 import { Paper, Typography, TextField, Button } from '@material-ui/core';
 
@@ -32,8 +32,7 @@ class ProjectForm extends React.Component {
         const {classes, onInputChange, onSave, onCancel} = this.props
 
         return(
-            <Paper className={classes.paper}>
-            <Typography variant='h5'> Create New Project </Typography>
+            <Fragment>
                 <TextField id="name"
                     label="Project Name"
                     className={classes.textField}
@@ -74,7 +73,7 @@ class ProjectForm extends React.Component {
                         color="secondary" 
                         className={classes.button} onClick={onCancel} > Cancel </Button>
                 </div>
-            </Paper>
+            </Fragment>
         )
     }
 }

@@ -6,6 +6,8 @@ export const loadUsers = () => dispatch => {
 
     const data = []
 
+    console.log('Loading Users')
+    
     db.collection('users').get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
             const user = {
